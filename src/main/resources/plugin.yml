@@ -1,0 +1,10 @@
+name: MCLogin
+version: '${project.version}'
+main: nl.sverben.mclogin.MCLogin
+api-version: 1.18
+authors: [ sverben ]
+
+commands:
+  verify:
+    description: verify
+    usage: /verify
