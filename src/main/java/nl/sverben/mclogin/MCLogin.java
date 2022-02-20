@@ -53,7 +53,7 @@ public final class MCLogin extends JavaPlugin implements Listener {
 
         String result = "{}";
         try {
-            result = get("http://192.168.32.3:3000/api/genState?username=" + p.getName());
+            result = get("http://mclogin:3000/api/genState?username=" + p.getName());
         } catch (IOException ex) {
             ex.printStackTrace();
         }

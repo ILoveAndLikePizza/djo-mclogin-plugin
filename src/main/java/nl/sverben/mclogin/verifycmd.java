@@ -29,7 +29,7 @@ public class verifycmd implements CommandExecutor {
 
         JsonObject json = null;
         try {
-            json = g.fromJson(plug.get("http://192.168.32.3:3000/api/checkState?state=" + state), JsonObject.class);
+            json = g.fromJson(plug.get("http://mclogin:3000/api/checkState?state=" + state), JsonObject.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
