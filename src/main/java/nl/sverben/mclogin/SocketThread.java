@@ -44,10 +44,6 @@ public class SocketThread extends Thread {
         }
     }
 
-    public synchronized void handlePlayer(Player p) {
-
-    }
-
     public void end() {
         this.loop = false;
 
