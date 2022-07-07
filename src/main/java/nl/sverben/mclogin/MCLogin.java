@@ -16,10 +16,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public final class MCLogin extends JavaPlugin implements Listener {
     World empty;
     Gson g = new Gson();
+    SocketThread thread;
 
     @Override
     public void onEnable() {
@@ -36,11 +38,30 @@ public final class MCLogin extends JavaPlugin implements Listener {
 
         getCommand("verify").setExecutor(new verifycmd(this));
         getServer().getPluginManager().registerEvents(this, this);
+
+        thread = new SocketThread(this);
+        thread.start();
+
+        MCLogin plug = this;
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+
+            @Override
+            public void run() {
+                for (String name : thread.queue) {
+                    Player p = getServer().getPlayer(name);
+                    p.teleport(getServer().getWorld("lobby").getSpawnLocation());
+                    getServer().broadcastMessage(ChatColor.YELLOW + p.getName() + " logged into the server");
+                    p.setMetadata("LoggingIn", new FixedMetadataValue(plug, false));
+                }
+                thread.queue = new ArrayList<>();
+            }
+        }, 20L, 20L);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        thread.end();
     }
 
     @EventHandler
