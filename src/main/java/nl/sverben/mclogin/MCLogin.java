@@ -48,12 +48,17 @@ public final class MCLogin extends JavaPlugin implements Listener {
             @Override
             public void run() {
                 for (String name : thread.queue) {
+                    if (name == null || name.isEmpty()) {
+                        continue;
+                    }
                     Player p = getServer().getPlayer(name);
                     p.teleport(getServer().getWorld("lobby").getSpawnLocation());
                     getServer().broadcastMessage(ChatColor.YELLOW + p.getName() + " logged into the server");
                     p.setMetadata("LoggingIn", new FixedMetadataValue(plug, false));
                 }
-                thread.queue = new ArrayList<>();
+                synchronized (this) {
+                    thread.queue.clear();
+                }
             }
         }, 20L, 20L);
     }

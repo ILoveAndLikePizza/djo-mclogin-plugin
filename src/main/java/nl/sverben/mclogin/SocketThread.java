@@ -37,8 +37,10 @@ public class SocketThread extends Thread {
 
             while (loop) {
                 String line = reader.readLine();
-                queue.add(line);
-            }
+                synchronized (this) {
+                    queue.add(line);
+                }
+             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
