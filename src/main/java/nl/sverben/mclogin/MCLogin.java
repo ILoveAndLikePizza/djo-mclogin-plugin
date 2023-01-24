@@ -89,7 +89,11 @@ public final class MCLogin extends JavaPlugin implements Listener {
         String url = json.get("auth").getAsString();
         String state = json.get("state").getAsString();
 
-        p.sendMessage("Log in to DJO Minecraft on " + ChatColor.BOLD + url);
+        getServer().getScheduler().runTaskLater(this, () -> {
+            p.sendMessage(ChatColor.DARK_GREEN + "Welkom " + ChatColor.GREEN + p.getName() + ChatColor.DARK_GREEN
+                + " op de DJO Minecraft Server!")
+            p.sendMessage(ChatColor.DARK_GREEN + "Klik hier om in te loggen: " + ChatColor.GREEN + url);
+        }, 3L);
         p.setMetadata("state", new FixedMetadataValue(this, state));
     }
 
